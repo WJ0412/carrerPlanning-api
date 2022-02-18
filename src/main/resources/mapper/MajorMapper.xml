@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mars.mapper.MajorMapper">
+
+    <select id="findByNameLike" resultType="com.mars.vo.MajorVO">
+        select m.id, m.name, c.name as collegeName
+        from major as m
+        inner join college as c
+        where m.college_id = c.id
+        <if test="collegeId != null">
+            and college_id = #{collegeId}
+        </if>
+        <if test="name != null">
+            and m.name like CONCAT('%', #{name}, '%')
+        </if>
+        order by m.id asc
+    </select>
+
+</mapper>
